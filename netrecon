@@ -1,9 +1,12 @@
 #!/bin/bash
 
-#Ask for the target
+# Script for LAN recon
+# By zw9seq
+
+# Ask for the target
 read -p "Specify the name of the target: " target
 
-#Variables
+# Variables
 dir="/home/r0nin/Lab/${target}"
 hosts="${dir}/hosts.txt"
 hostsIps="/tmp/ips.txt"
@@ -11,13 +14,13 @@ ports="${dir}/ports.txt"
 p80="/tmp/p80.txt"
 p443="/tmp/p443.txt"
 
-#Look if the directory already exists
+# Look if the directory already exists
 if ! [ -d "${dir}" ]
 then
     mkdir "${dir}"
 fi
 
-#Change the MAC
+# Change the MAC
 echo -e "\Changing MAC\n"
 sudo ifconfig wlan0 down
 sleep 1
@@ -26,20 +29,20 @@ sleep 1
 sudo ifconfig wlan0 up
 echo -e "MAC changed to: $(macchanger -s wlan0 | grep "Current MAC" | cut -d " " -f 5)\n"
 
-#Get the active hosts
+# Get the active hosts
 echo -e "Scanning the net...\n"
 touch "${hosts}"
 sudo arp-scan -I wlan0 -l -r 5 -i 7 -x -q >"${hosts}"
 echo -e "Scan finished.\n"
 
-#Scan the hosts's ports
+# Scan the hosts's ports
 echo -e "Starting port scan...\n"
 cut -f 1 "${hosts}" > "${hostsIps}"
 sudo masscan -p80,22,21,25,53,443,3306,139,445,3389,389,161,554,1433,1521,5432,8080 --rate=1000 --source-port=53 -iL "${hostsIps}" -oG "${ports}" &>/dev/null
 rm "${hostsIps}"
 echo -e "Port scan finished.\n"
 
-#Take screenshots of the hosts's webs
+# Take screenshots of the hosts's webs
 echo -e "Getting the webs from the hosts...\n"
 grep "Ports: 80" "${ports}" | awk '{print $4}' > "${p80}"
 grep "Ports: 443" "${ports}" | awk '{print $4}' > "${p443}"
@@ -47,7 +50,7 @@ eyewitness --web --delay 2 --threads 3 --no-prompt --results 5 -f "${p80}" -d "$
 eyewitness --web --delay 2 --threads 3 --no-prompt --results 5 -f "${p443}" -d "${dir}/443" &>/dev/null
 echo -e "Web recon finished.\n"
 
-#Remove temp files
+# Remove temp files
 echo -e "Removing temporary files..."
 rm "${p80}"
 rm "${p443}"
