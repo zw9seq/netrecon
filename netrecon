@@ -26,7 +26,7 @@ then
 fi
 
 # Change the MAC
-echo -e "\Changing MAC\n"
+echo -e "\nChanging MAC\n"
 sudo ifconfig wlan0 down
 sleep 1
 sudo macchanger -a wlan0 &>/dev/null
