@@ -49,7 +49,7 @@ sudo cp netrecon /usr/local/bin
 Using **NetRecon** is simple. Run the script, and it will prompt you to enter the name of the target. This name will be used to create a directory that will store the information about the target.
 
 ```bash
-netrecon
+./netrecon
 ```
 
 For a further documentation visit <https://zw9seq.github.io/posts/NetRecon/>.
