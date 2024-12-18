@@ -52,6 +52,8 @@ Using **NetRecon** is simple. Run the script, and it will prompt you to enter th
 netrecon
 ```
 
+For a further documentation visit <https://zw9seq.github.io/posts/NetRecon/>.
+
 ## License
 
 This project is licensed under the **MIT License**. Feel free to modify and distribute this template as needed.
