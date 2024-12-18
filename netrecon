@@ -5,6 +5,11 @@
 
 # Ask for the target
 read -p "Specify the name of the target: " target
+while [ -z "$target" ]; do
+    echo -e "\nPlease enter the name of the target.\n"
+    sleep 1
+    read -p "Specify the name of the target: " target
+done
 
 # Variables
 dir="/home/r0nin/Lab/${target}"
