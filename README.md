@@ -17,6 +17,7 @@ git clone https://github.com/zw9seq/netrecon
 Then, go into the directory and grant execution permissions to the two scripts in the folder.
 
 ```bash
+cd netrecon
 chmod +x setup.sh
 chmod +x netrecon
 ```
