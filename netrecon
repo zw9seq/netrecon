@@ -12,7 +12,7 @@ while [ -z "$target" ]; do
 done
 
 # Variables
-dir="/home/r0nin/Lab/${target}"
+dir="./${target}"
 hosts="${dir}/hosts.txt"
 hostsIps="/tmp/ips.txt"
 ports="${dir}/ports.txt"
