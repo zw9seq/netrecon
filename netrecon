@@ -61,7 +61,7 @@ rm "${p80}"
 rm "${p443}"
 rm "./geckodriver.log"
 
-echo "Netrecon finished."
+echo -e "\nNetrecon finished."
 sleep 1
 exit 0
 
