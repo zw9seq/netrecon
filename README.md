@@ -12,7 +12,13 @@ First, clone the repository to your desired directory:
 
 ```bash
 git clone https://github.com/zw9seq/netrecon
-cd netrecon
+```
+
+Then, go into the directory and grant execution permissions to the two scripts in the folder.
+
+```bash
+chmod +x setup.sh
+chmod +x netrecon
 ```
 
 Next, install the **requirements** using the **setup.sh** script:
