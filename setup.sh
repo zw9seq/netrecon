@@ -11,8 +11,8 @@ if command -v apt-get &> /dev/null; then
     INSTALL_CMD="sudo apt-get install -y"
 elif command -v dnf &> /dev/null; then
     INSTALL_CMD="sudo dnf install -y"
-elif command -v pacman &> /dev/null; then
-    INSTALL_CMD="sudo pacman -S --noconfirm"
+elif command -v yay &> /dev/null; then
+    INSTALL_CMD="yay -S --noconfirm"
 elif command -v zypper &> /dev/null; then
     INSTALL_CMD="sudo zypper install -y"
 else
@@ -26,9 +26,9 @@ echo "Installing dependencies..."
 while IFS= read -r package
 do
   if [ -n "$package" ]; then  # Verify that the line isn't empty
-    echo "Installing $package..."
+    echo -e "\nInstalling $package..."
     $INSTALL_CMD "$package"
   fi
 done < "requirements.txt"
 
-echo "¡Installation completed!"
+echo -e "\n¡Installation completed!"
