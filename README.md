@@ -83,12 +83,12 @@ sudo cp netrecon /usr/local/bin
 1. Make the script executable:
 
    ```bash
-   chmod +x netrecon.sh
+   chmod +x netrecon
    ```
 2. Run it:
 
    ```bash
-   ./netrecon.sh
+   ./netrecon
    ```
 3. Provide a **target name** (workspace folder).
 4. Choose whether to **change your MAC address**.
