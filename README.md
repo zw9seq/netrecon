@@ -40,8 +40,8 @@ All dependencies are listed in **`requirements.txt`**.
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/<your-username>/<repo-name>.git
-cd <repo-name>
+git clone https://github.com/zw9seq/netrecon.git
+cd netrecon
 ````
 
 ### 2. Install dependencies
