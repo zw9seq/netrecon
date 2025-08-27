@@ -62,7 +62,7 @@ Supported package managers:
 
 If your system uses a different package manager, install dependencies manually.
 
-### 3.Additional Configuration
+### 3. Additional Configuration
 
 If you want to make the script easier to execute by adding it to your system's PATH, simply copy it to one of the directories included in your PATH. To view your current PATH, run:
 
