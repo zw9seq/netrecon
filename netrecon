@@ -3,6 +3,14 @@
 # Script for LAN recon
 # By zw9seq
 
+# Check dependencies
+for cmd in arp-scan masscan gowitness macchanger; do
+    if ! command -v $cmd &>/dev/null; then
+        echo "[-] $cmd not found, please install it."
+        exit 1
+    fi
+done
+
 # Ask for the target
 read -p "Specify the name of the target: " target
 while [ -z "$target" ]; do
@@ -12,12 +20,12 @@ while [ -z "$target" ]; do
 done
 
 # Variables
-dir="./${target}"
+dir="$HOME/Lab/${target}"
 hosts="${dir}/hosts.txt"
 hostsIps="/tmp/ips.txt"
 ports="${dir}/ports.txt"
-p80="/tmp/p80.txt"
-p443="/tmp/p443.txt"
+scanPorts="/tmp/scanPorts.txt"
+netInt=$(ip route | grep '^default' | awk '{print $5}')
 
 # Look if the directory already exists
 if ! [ -d "${dir}" ]
@@ -25,19 +33,31 @@ then
     mkdir "${dir}"
 fi
 
+# Ask for the MAC change
+while true; do
+    read -p "Do you want to change your MAC address? [y/n] " res
+    if [[ "$res" == "y" || "$res" == "n" ]]; then
+        break
+    fi
+    echo -e "\nAnswer y or n.\n"
+    sleep 1
+done
+
 # Change the MAC
-echo -e "\nChanging MAC\n"
-sudo ifconfig wlan0 down
-sleep 1
-sudo macchanger -a wlan0 &>/dev/null
-sleep 1
-sudo ifconfig wlan0 up
-echo -e "MAC changed to: $(macchanger -s wlan0 | grep "Current MAC" | cut -d " " -f 5)\n"
+if [[ "$res" == "y" ]]; then
+    echo -e "\nChanging MAC\n"
+    sudo ifconfig "$netInt" down
+    sleep 1
+    sudo macchanger -a "$netInt" &>/dev/null
+    sleep 1
+    sudo ifconfig "$netInt" up
+    echo -e "MAC changed to: $(macchanger -s "$netInt" | grep "Current MAC" | cut -d " " -f 5)\n"
+fi
 
 # Get the active hosts
 echo -e "Scanning the net...\n"
 touch "${hosts}"
-sudo arp-scan -I wlan0 -l -r 5 -i 7 -x -q >"${hosts}"
+sudo arp-scan -I "$netInt" -l -r 5 -i 7 -x -q >"${hosts}"
 echo -e "Scan finished.\n"
 
 # Scan the hosts's ports
@@ -49,20 +69,14 @@ echo -e "Port scan finished.\n"
 
 # Take screenshots of the hosts's webs
 echo -e "Getting the webs from the hosts...\n"
-grep "Ports: 80" "${ports}" | awk '{print $4}' > "${p80}"
-grep "Ports: 443" "${ports}" | awk '{print $4}' > "${p443}"
-eyewitness --web --delay 2 --threads 3 --no-prompt --results 5 -f "${p80}" -d "${dir}/80" &>/dev/null
-eyewitness --web --delay 2 --threads 3 --no-prompt --results 5 -f "${p443}" -d "${dir}/443" &>/dev/null
+grep "Ports: 80" "${ports}" | awk '{print $4}' > "${scanPorts}"
+grep "Ports: 443" "${ports}" | awk '{print $4}' >> "${scanPorts}"
+gowitness scan file -f "${scanPorts}" --screenshot-path "${dir}/screenshots" &>/dev/null
 echo -e "Web recon finished.\n"
 
 # Remove temp files
 echo -e "Removing temporary files..."
-rm "${p80}"
-rm "${p443}"
-rm "./geckodriver.log"
+rm "${scanPorts}"
 
 echo -e "\nNetrecon finished."
-sleep 1
 exit 0
-
-
