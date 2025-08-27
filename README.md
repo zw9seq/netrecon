@@ -52,7 +52,7 @@ Using **NetRecon** is simple. Run the script, and it will prompt you to enter th
 ./netrecon
 ```
 
-For a further documentation visit <https://zw9seq.github.io/posts/NetRecon/>.
+For a further documentation visit <https://zw9seq.github.io/proyectos/netrecon/>.
 
 ## License
 
