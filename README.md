@@ -1,36 +1,68 @@
-# NetRecon
+# 🔍 Netrecon
 
-> A tool to scan the network you're connected to.
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+![Bash](https://img.shields.io/badge/Bash-4.0%2B-blue)
+![Status](https://img.shields.io/badge/status-active-success)
 
-**NetRecon** is a **Bash script** that automates the process of scanning a network and identifying key targets. It was designed to save time when conducting reconnaissance on a network. 
+A lightweight **Bash script** for **LAN reconnaissance and service discovery**.  
+It automates host detection, port scanning, and web service fingerprinting in local networks, organizing results into a clean workspace for later analysis.
 
-This script should be the first task to run when connecting to a network. It will provide you with a list of active hosts on the network, check for key open ports, and capture screenshots of detected web servers—all while maintaining your anonymity.
+---
 
-## Installation
+## ✨ Features
+- 🕵️ **Optional MAC spoofing** with `macchanger`.
+- 🌐 **Host discovery** using `arp-scan`.
+- ⚡ **Fast port scanning** with `masscan` (common ports).
+- 🖥️ **Web reconnaissance**:
+  - Detects HTTP/HTTPS services.
+  - Captures **screenshots automatically** with `gowitness`.
+- 📂 **Organized output**:
+  - Creates a target folder: `~/Lab/<target>/`.
+  - Saves `hosts.txt`, `ports.txt`, and web screenshots.
 
-First, clone the repository to your desired directory:
+---
+
+## 📦 Requirements
+The script relies on several external tools:
+
+- `macchanger`  
+- `arp-scan`  
+- `masscan`  
+- `go`  
+- `gowitness`  
+- `google-chrome`  
+
+All dependencies are listed in **`requirements.txt`**.  
+
+---
+
+## ⚙️ Installation
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/<your-username>/<repo-name>.git
+cd <repo-name>
+````
+
+### 2. Install dependencies
+
+Run the included **setup script**, which auto-detects your package manager and installs everything from `requirements.txt`:
 
 ```bash
-git clone https://github.com/zw9seq/netrecon
-```
-
-Then, go into the directory and grant execution permissions to the two scripts in the folder.
-
-```bash
-cd netrecon
 chmod +x setup.sh
-chmod +x netrecon
-```
-
-Next, install the **requirements** using the **setup.sh** script:
-
-```bash
 ./setup.sh
 ```
 
-Once all the required packages are installed, the tool will be ready for use.
+Supported package managers:
 
-### Additional Configuration
+* ✅ `apt-get` (Debian/Ubuntu)
+* ✅ `dnf` (Fedora/RHEL)
+* ✅ `yay` (Arch Linux)
+* ✅ `zypper` (openSUSE)
+
+If your system uses a different package manager, install dependencies manually.
+
+### 3.Additional Configuration
 
 If you want to make the script easier to execute by adding it to your system's PATH, simply copy it to one of the directories included in your PATH. To view your current PATH, run:
 
@@ -44,18 +76,58 @@ Typically, you'll want to place it in the **/usr/local/bin** directory. To do so
 sudo cp netrecon /usr/local/bin
 ```
 
-## Usage
+---
 
-Using **NetRecon** is simple. Run the script, and it will prompt you to enter the name of the target. This name will be used to create a directory that will store the information about the target.
+## 🚀 Usage
 
-```bash
-./netrecon
+1. Make the script executable:
+
+   ```bash
+   chmod +x netrecon.sh
+   ```
+2. Run it:
+
+   ```bash
+   ./netrecon.sh
+   ```
+3. Provide a **target name** (workspace folder).
+4. Choose whether to **change your MAC address**.
+5. The script will automatically:
+
+   * 🔎 Discover hosts in your LAN.
+   * 📡 Scan common ports.
+   * 🌍 Identify and screenshot web services.
+
+📁 Results will be stored in:
+
+```
+~/Lab/<target>/
 ```
 
-For a further documentation visit <https://zw9seq.github.io/proyectos/netrecon/>.
+Example structure:
 
-## License
+```
+Lab/
+└── test-target/
+    ├── hosts.txt
+    ├── ports.txt
+    └── screenshots/
+```
 
-This project is licensed under the **MIT License**. Feel free to modify and distribute this template as needed.
+---
 
-See [LICENSE](LICENSE) for more details.
+## ⚠️ Disclaimer
+
+This script is intended for **educational purposes and authorized security testing only**.
+Do **not** use it on networks without explicit permission. Unauthorized use may be illegal.
+
+---
+
+## 👤 Author
+
+**zw9seq**
+📅 Built with 💻 + ☕
+
+For more details: https://zw9seq.github.io/proyectos/netrecon
+
+⭐ If you find this tool useful, consider giving the repo a **star**!
