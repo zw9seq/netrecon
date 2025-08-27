@@ -1,4 +1,6 @@
 macchanger
 arp-scan
 masscan
-eyewitness
+go
+gowitness
+google-chrome
